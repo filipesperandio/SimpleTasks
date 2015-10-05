@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -e
+
+echo "=> Installing required node version..."
+REQUIRED_NODE_VERSION=$(cat package.json | python -c 'import json,sys;j=json.load(sys.stdin);print j["engines"]["node"]')
+RESOLVED_NODE_VERSION=$(curl -Ls https://semver.io/node/resolve/${REQUIRED_NODE_VERSION})
+n ${RESOLVED_NODE_VERSION}

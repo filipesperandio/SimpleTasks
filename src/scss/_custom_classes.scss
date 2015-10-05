@@ -1,0 +1,164 @@
+body { background-color: $base-background-color; }
+
+[ng-cloak] {
+  display: block !important;
+  &:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $light;
+    background-image: url(../images/icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+}
+
+/* ----------------- SPLASH SCREEN ----------------- */
+.splash-screen {
+  background-color: $light;
+  display: flex;
+  flex-direction: column;
+  box-shadow: $card-box-shadow;
+
+  justify-content: center;
+  align-items: center;
+
+  section {
+    text-align: center;
+    padding: 0 (3 * $content-padding);
+    flex-grow: 1;
+
+    img {
+      margin: (3 * $content-padding) auto;
+      width: 150px;
+    }
+
+    p { font-size: 1.2em; }
+  }
+}
+
+.splash-screen.spaced { justify-content: space-between; }
+
+@media (min-width: $breakpoint)  {
+  .splash-screen.limited-height { max-height: 60%; }
+}
+
+/* ----------------- INPUT BAR ----------------- */
+.bar-input {
+  width: 100%;
+  background-color: $base-background-color;
+  display: flex;
+  align-items: center;
+
+  input {
+    flex-grow: 1;
+    background: transparent;
+    padding: 0px $item-padding;
+
+    &:valid + .clear-input {
+      display: block;
+    }
+  }
+
+  .clear-input {
+    font-size: 18px;
+    background-color: $base-light-color;
+    border-radius: 50%;
+    color: $base-background-color;
+    cursor: pointer;
+    display: none;
+  }
+}
+
+/* ----------------- FORMS ----------------- */
+// we are assuming that icon size will always be 24px
+.form-field {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  .icon {
+    margin-right: $item-padding;
+    order: 1;
+  }
+
+  textarea {
+    flex-grow: 1;
+    order: 2;
+  }
+
+  input {
+    flex-grow: 1;
+    order: 2;
+    border-bottom: 1px solid rgba($base-light-color, 0.3);
+    border-radius: 0;
+
+    &:focus {
+      border-bottom: 1px solid $positive;
+      box-shadow: inset 0 -1px 0 $positive;
+    }
+
+    &.ng-invalid.ng-dirty {
+      border-bottom: 1px solid $assertive;
+      box-shadow: inset 0 -1px 0 $assertive;
+    }
+  }
+
+  .icon ~ .inline-validations {
+    margin-left: $icon-size + $item-padding;
+  }
+
+  .inline-validations {
+    display: block;
+    width: 100%;
+    order: 3;
+
+    font-size: 0.8em;
+    color: $assertive;
+  }
+}
+
+.form-field-select.empty { color: $base-light-color; }
+.form-field-select::after {
+  content: ''; display: block;
+  position: absolute;
+  right: $item-padding;
+  left: $icon-size + ($item-padding * 2);
+  bottom: $item-padding - 4px;
+  border-bottom: 1px solid rgba($base-light-color, 0.3);
+}
+
+// .form-field icon colours are dynamic, this is handled here:
+.form-field {
+  input ~ .icon { color: $base-light-color; }
+
+  input:focus ~ .icon,
+  input.ng-dirty ~ .icon { color: $positive; }
+}
+
+.form-field-select {
+  .icon:first-of-type { color: $positive; }
+  &.empty .icon:first-of-type { color: $base-light-color; }
+}
+
+
+i.icon-large { font-size: 2.5em; }
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bar .button, .button {
+  font-weight: bold;
+}
+
+.header-shadow {
+  box-shadow: 0 1px 4px 0 rgba(0,0,0, 0.18);
+}

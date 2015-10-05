@@ -1,0 +1,27 @@
+{
+  "browser": true,
+  "node": true,
+
+  "camelcase": true,
+  "sub": true,
+  "eqeqeq": true,
+  "indent": 2,
+  "latedef": true,
+  "maxlen": 120,
+  "newcap": true,
+  "quotmark": false, // annoying, sometimes double-quotes are cool
+  "white": true,
+  "undef": true,
+  // "maxparams": 4, // looking into turning this one on.
+  // "strict": true, // looking into turning this one on.
+  "unused": true,
+  "globals": {
+    "angular": true,
+    "cordova": true,
+    "ionic": true,
+    "escape": true,
+    "f": true,
+    "Promise": true,
+    "Pusher": true
+  }
+}

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -eu
+: ${DEPLOY_WEB_DIST:?"Please provide the directory to be deployed."}
+: ${DEPLOY_WEB_REMOTE:?"Please provide which remote to deploy to."}
+[ -d "$DEPLOY_WEB_DIST" ] || (echo "Directory '$DEPLOY_WEB_DIST' not found."; exit 1)
+
+function reset () {
+  [ "$NEEDS_RESET" = true ] && (git reset HEAD^ || true)
+}
+trap reset EXIT
+
+[ -d ".git" ] || git init
+(git remote | grep -q heroku) || git remote add heroku $DEPLOY_WEB_REMOTE
+
+git branch -D build || true
+
+rm -rf .git/hooks/*
+git add --force $DEPLOY_WEB_DIST
+git commit --allow-empty-message -m '' && NEEDS_RESET=true
+git subtree split --prefix $DEPLOY_WEB_DIST --branch build
+
+git push --no-verify $DEPLOY_WEB_REMOTE build:master --force

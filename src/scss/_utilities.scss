@@ -1,0 +1,72 @@
+hr {
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid $item-light-border;
+}
+
+.light-background { background-color: $light; }
+.base-background { background-color: $base-background-color; }
+
+.strong { font-weight: 600; }
+
+.full-width {
+  width: 100%;
+  max-width: 100%;
+}
+
+.vertical-center {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.evenly-spaced {
+  display: flex;
+  justify-content: space-between;
+}
+
+.muted {
+  color: $base-light-color;
+}
+
+.hint {
+  background-color: white;
+  font-style: italic;
+  padding: $item-padding;
+}
+
+.material-icons {
+  &.with-shadow {
+    position: relative;
+    &:before {
+      background: $base-background-color;
+      width: 150%;
+      height: 10px;
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      border-radius: 100%;
+      transform: translateX(-50%);
+      z-index: -1;
+    }
+  }
+}
+
+.build-info {
+  color: $base-light-color;
+}
+
+.relative {
+  position: relative;
+}
+
+.primary-text {
+  font-size: 16px;
+  color: $primaryText-grey;
+}
+
+.secondary-text {
+  font-size: 14px;
+  color: $secondaryText-grey;
+}

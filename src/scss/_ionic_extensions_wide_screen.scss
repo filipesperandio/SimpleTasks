@@ -1,0 +1,63 @@
+.tabs-top,
+.tabs-bottom {
+  .tabs { box-shadow: $card-box-shadow; }
+}
+
+@media (min-width: $breakpoint)  {
+  .modal,
+  .view,
+  .pane {
+    max-width: 704px;
+    margin: 0 auto;
+  }
+
+  .view,
+  .pane {
+    overflow: visible;
+  }
+
+  .bar:before,
+  .tabs-top .tabs:before,
+  .tabs-bottom .tabs:before {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 10000%;
+    position: absolute;
+    top: 0;
+    left: -5000%;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .tabs-top,
+  .tabs-bottom {
+    .tabs { box-shadow: none; }
+    .tabs:before { box-shadow: $card-box-shadow; }
+  }
+
+  .bar {
+    &.bar-light:before     { background-color: $light; }
+    &.bar-stable:before    { background-color: $stable; }
+    &.bar-positive:before  { background-color: $positive; }
+    &.bar-calm:before      { background-color: $calm; }
+    &.bar-assertive:before { background-color: $assertive; }
+    &.bar-balanced:before  { background-color: $balanced; }
+    &.bar-energized:before { background-color: $energized; }
+    &.bar-royal:before     { background-color: $royal; }
+    &.bar-dark:before      { background-color: $dark; }
+  }
+
+  .tabs-top,
+  .tabs-bottom {
+    &.tabs-background-light .tabs:before     { background-color: $light; }
+    &.tabs-background-stable .tabs:before    { background-color: $stable; }
+    &.tabs-background-positive .tabs:before  { background-color: $positive; }
+    &.tabs-background-calm .tabs:before      { background-color: $calm; }
+    &.tabs-background-assertive .tabs:before { background-color: $assertive; }
+    &.tabs-background-balanced .tabs:before  { background-color: $balanced; }
+    &.tabs-background-energized .tabs:before { background-color: $energized; }
+    &.tabs-background-royal .tabs:before     { background-color: $royal; }
+    &.tabs-background-dark .tabs:before      { background-color: $dark; }
+  }
+}

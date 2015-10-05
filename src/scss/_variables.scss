@@ -1,0 +1,56 @@
+$breakpoint: 704px;
+$font-family-sans-serif: 'Roboto', sans-serif;
+$font-title-size: 19px;
+
+$primaryText-grey: #657683;
+$main-blue: #3BA4CE;
+$secondaryText-grey: #A1ABB1;
+$muted-blue: #97AFBE;
+$pale-grey: #e0e7eb;
+$base-background-color: #F3F5F6;
+$hint-banner: #79919F;
+
+$row-active: $base-background-color;
+$row-hover: #F7F9FB;
+
+$positive-disabled: #8AC9E1;
+$balanced: #77AE46;
+$royal: purple;
+$dark: #2E475E;
+$assertive: #D15B42;
+
+$muted: $secondaryText-grey;
+$base-color: $primaryText-grey;
+$base-light-color: $secondaryText-grey;
+$positive: $main-blue;
+
+$item-dark-bg: $royal;
+$button-dark-bg: $royal;
+
+$input-color-placeholder: $base-light-color;
+
+$button-dark-border:        darken($dark, 8%);
+$button-dark-active-bg:     darken($dark, 8%);
+$button-dark-active-border: darken($dark, 8%);
+
+$bar-height: 44px !default;
+$bar-height-double-line: 76px !default;
+
+$line-height-base: 1.5;
+$button-border-radius: 5px;
+$button-bar-button-padding: 12px;
+$dashboard-badge-border-radius: 4px;
+$checkbox-height: 20px;
+$checkbox-width: 20px;
+
+$item-height: 48px;
+$item-light-border: #e9eef0;
+
+$modal-backdrop-bg-active: darken($dark, 20%);
+
+$section-header: $base-background-color;
+$item-button-font-size: 12px;
+
+$icon-size: 24px;
+
+$item-padding: 16px;
