@@ -1,0 +1,58 @@
+<ion-view view-title="{{tasklist.name}}">
+
+  <ion-nav-buttons side="right">
+    <button class="button  button-clear" ng-click="clearDone()">
+      <i class="material-icons">done_all</i>
+    </button>
+    <button class="button  button-clear" ng-click="clearDone()">
+      <i class="material-icons">clear_all</i>
+    </button>
+  </ion-nav-buttons>
+
+  <form id="form-new-task"
+    ng-submit="createTask(tasklist.newTask.title)"
+    class="bar  bar-subheader  bar-dark">
+    <input type="text" id="new-task" placeholder="new task" class="full-width  input-bottom" ng-model="tasklist.newTask.title" autofocus>
+  </form>
+
+  <ion-content class="has-header  has-subheader">
+
+    <ul class="list">
+
+      <li collection-repeat="task in tasklist.tasks | orderBy: '-createdAt'" 
+          ng-class="{'checked': task.done }"
+          class="blue-background  fade-in-white  item  item-checkbox  item-icon-right">
+
+        <label class="checkbox  flex-5">
+          <input type="checkbox" class="dark" ng-change="save(task)" ng-model="task.done">
+        </label>
+
+        {{task.title}}
+
+        <span class="icon  top-layer" ng-click="pickDate(task)">
+
+          <p ng-class="{'checked': task.done}" 
+             ng-show="task.due"> 
+            <small>{{ task.due | date:'MMM dd hh:mm a' }}</small> 
+          </p>
+
+          <button class="button  button-clear  button-dark  button-small  material-icons"
+                  ng-class="{'checked': task.done}" 
+                  ng-hide="task.due">
+            alarm
+          </button>
+
+        </span>
+
+      </li>
+
+    </ul>
+
+
+  </ion-content>
+
+  <button class="button  button-dark  material-button  material-icons  top-layer  global-add-button"
+          focus-id='new-task' focus-on='click'
+          >add</button>
+
+</ion-view>

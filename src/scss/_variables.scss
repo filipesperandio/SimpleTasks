@@ -2,10 +2,8 @@ $breakpoint: 704px;
 $font-family-sans-serif: 'Roboto', sans-serif;
 $font-title-size: 19px;
 
-$primaryText-grey: #657683;
-$main-blue: #3BA4CE;
+$primaryText-grey: #272727;
 $secondaryText-grey: #A1ABB1;
-$muted-blue: #97AFBE;
 $pale-grey: #e0e7eb;
 $base-background-color: #F3F5F6;
 $hint-banner: #79919F;
@@ -14,18 +12,22 @@ $row-active: $base-background-color;
 $row-hover: #F7F9FB;
 
 $positive-disabled: #8AC9E1;
-$balanced: #77AE46;
-$royal: purple;
-$dark: #2E475E;
-$assertive: #D15B42;
 
-$muted: $secondaryText-grey;
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+
+$muted: grey;
+
 $base-color: $primaryText-grey;
 $base-light-color: $secondaryText-grey;
-$positive: $main-blue;
-
-$item-dark-bg: $royal;
-$button-dark-bg: $royal;
+$main-blue: $positive;
 
 $input-color-placeholder: $base-light-color;
 
