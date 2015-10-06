@@ -27,10 +27,13 @@ clean:; rm -rf $(output) artifacts/* tmp/*
 .PHONY: clobber
 clobber:; @cat .gitignore | xargs rm -rf
 
-.PHONY: serve
-serve: node_modules/nodemon
-	@nodemon --quiet --ext html,js,json,scss,css --watch $(source)/ --ignore $(source)/lib --exec '$(MAKE) build' &
+.PHONY: server
+server: 
 	@ionic serve --all --nobrowser --labs
+
+.PHONY: serve
+serve:
+	@$(MAKE) -j2 build.watch server
 
 include tasks/install.mk
 include tasks/build.mk

@@ -1,3 +1,7 @@
+.PHONY: watch
+build.watch: node_modules/nodemon
+	@nodemon --quiet --ext html,js,json,scss,css --watch $(source)/ --ignore $(source)/lib --exec '$(MAKE) build'
+
 .PHONY: build
 build: javascript stylesheet rest
 
