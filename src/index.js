@@ -35,7 +35,7 @@ app.config(['cfpLoadingBarProvider', function (provider) {
 
 // Local Storage Service =======================================================
 app.config(['localStorageServiceProvider', function (provider) {
-  provider.setPrefix('pfConnect');
+  provider.setPrefix('myapp');
 }]);
 
 
@@ -53,6 +53,8 @@ app.service("firebaseRef", function() {
 app.factory('Auth', [ 'firebaseRef', '$firebaseAuth', function (firebaseRef, $firebaseAuth) {
   return $firebaseAuth(firebaseRef);
 }]);
+
+app.service('authWrapper', require('./auth.wrapper'));
 
 
 app.run(function($ionicPlatform) {
@@ -75,62 +77,24 @@ app.run(function($ionicPlatform) {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: function($rootScope, $scope, $ionicModal, $timeout, firebaseRef, Auth) {
-      function userLoggedIn(authData) {
-        log(authData);
-        $rootScope.$emit('login', authData);
-      };
-
-      function userNotLoggedInAlert () {
-        alert('Only signed in users for now!');
-      };
+    controller: function($rootScope, $scope, authWrapper) {
 
       $scope.facebookLogin = function facebookLogin () {
         if($rootScope.user) return;
-
-        Auth.$authWithOAuthRedirect("facebook").then(function(authData) {
-          console.log(' Logged in with redirect', authData);
-          // User successfully logged in
-        }).catch(function(error) {
-          console.log('Not Logged in ', error);
-          if (error.code === "TRANSPORT_UNAVAILABLE") {
-            Auth.$authWithOAuthPopup("facebook").then(function(authData) {
-              // User successfully logged in. We can log to the console
-              // since we’re using a popup here
-              console.log('Logged in with popup', authData);
-            });
-          } else {
-            // Another error occurred
-            console.log(error);
-          }
-        });
-
-//        firebaseRef.authWithOAuthRedirect('facebook', userLoggedIn);
-//          .then(userLoggedIn)
-//          .catch(userNotLoggedInAlert);
-        //firebaseRef.authWithOAuthPopup("facebook", function(error, authData) {
-        //  if (error) {
-        //    console.log("Login Failed!", error);
-        //  } else {
-        //    console.log("Authenticated successfully with payload:", authData);
-        //    userLoggedIn(authData);
-        //  }
-        //});
+        authWrapper.login('facebook');
       };
 
+      $scope.logout = authWrapper.logout;
 
-      $scope.logout = function() {
-        firebaseRef.unauth();
+      $rootScope.$on('logout', function () {
         $rootScope.user = undefined;
-        console.log('logging out');
-      };
+      });
 
 
       $scope.tasklist = {
         lists: [],
         newList: {}
       };
-
 
       $scope.createList = function(listName) {
         $scope.tasklist.lists.unshift({name: listName});
@@ -144,8 +108,8 @@ app.run(function($ionicPlatform) {
     views: {
       'menuContent': {
         templateUrl: 'templates/tasklist.html',
-        controller: [ '$scope', '$rootScope', '$stateParams', '$ionicPopup', '$firebaseArray', 'firebaseRef', 'Auth',
-          function($scope, $rootScope, $stateParams, $ionicPopup, $firebaseArray, firebaseRef, Auth) {
+        controller: [ '$scope', '$rootScope', '$stateParams', '$ionicPopup', '$firebaseArray', 'firebaseRef',
+          function($scope, $rootScope, $stateParams, $ionicPopup, $firebaseArray, firebaseRef) {
 
           $scope.tasklist = {
             name: $stateParams.name,
@@ -159,24 +123,6 @@ app.run(function($ionicPlatform) {
             $scope.tasklist.tasks = $firebaseArray(firebaseRef.child("/usertasks/"+user.uid));
           });
 
-          console.log('Registering');
-          console.log($rootScope.user);
-          Auth.$onAuth(function (authData) {
-            console.log('auth info', authData);
-            if(authData) {
-              $rootScope.$emit('login', authData);
-            } else {
-              $rootScope.$emit('logout');
-            }
-          });
-          firebaseRef.onAuth(function (authData) {
-            console.log('auth info', authData);
-            if(authData) {
-              $rootScope.$emit('login', authData);
-            } else {
-              $rootScope.$emit('logout');
-            }
-          });
 
           $scope.save = function (task) {
             $scope.tasklist.tasks.$save(task);
@@ -215,6 +161,7 @@ app.run(function($ionicPlatform) {
                 }
               ]
             });
+
             myPopup.then(function(res) {
               if(!res) {
                 scope.task.due = undefined;
