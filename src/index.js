@@ -42,7 +42,7 @@ app.config(['localStorageServiceProvider', function (provider) {
 function popTask (task) {
   var interval = task.due - new Date();
   setTimeout(function() {
-    alert(task.title);
+    window.alert(task.title);
   }, interval);
 }
 
@@ -67,7 +67,7 @@ app.run(function($ionicPlatform) {
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
+      window.StatusBar.styleDefault();
     }
   });
 })
@@ -180,7 +180,7 @@ app.run(function($ionicPlatform) {
         }]
       }
     }
-  })
+  });
 
   $urlRouterProvider.otherwise('/app/tasks/personal');
 });

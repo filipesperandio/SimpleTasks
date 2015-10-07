@@ -1,7 +1,5 @@
 function AuthWrapper (Auth, $rootScope) {
 
-  Auth.$onAuth(userLoggedIn);
-
   function userLoggedIn (authData) {
     $rootScope.$emit('login', authData);
   }
@@ -38,13 +36,15 @@ function AuthWrapper (Auth, $rootScope) {
     userLoggedOut();
   }
 
+  Auth.$onAuth(userLoggedIn);
+
   return {
     login: login,
     logout: logout,
     userLoggedIn: userLoggedIn,
     userLoggedOut: userLoggedOut
-  }
+  };
 }
 
-module.exports = AuthWrapper
+module.exports = AuthWrapper;
 
