@@ -77,15 +77,16 @@ app.run(function($ionicPlatform) {
 
       $rootScope.view = {};
 
-      $timeout(function () {
-        console.log('check user', $rootScope.view.user);
+      function checkUser () {
+        console.log('Checking user', $rootScope.view.user);
         if(!$rootScope.view.user) {
           $rootScope.$emit('logout');
         } else {
           $rootScope.$emit('user-loaded', $rootScope.view.user);
         }
+      }
 
-      }, 30000);
+      $timeout(checkUser, 30000);
 
       $rootScope.$on('login', function(event, user) {
         if(!user) {
@@ -131,8 +132,6 @@ app.run(function($ionicPlatform) {
       'menuContent': {
         templateUrl: 'templates/tasklist.html',
         controller: function($state, $ionicPopup, $ionicLoading, $scope, $rootScope, $stateParams, $firebaseArray, firebaseRef) {
-          var TaskListFactory = require('./task.list');
-
           var listName = $stateParams.name || 'personal';
 
           $scope.tasklist = {
@@ -143,6 +142,7 @@ app.run(function($ionicPlatform) {
 
           function loadTasks () {
             console.log('Loading tasks...');
+            $ionicLoading.show();
             $scope.tasklist.tasks = $firebaseArray(firebaseRef.child("/usertasks/"+$rootScope.view.user.uid));
             $scope.tasklist.tasks.$loaded().then($ionicLoading.hide);
           }
@@ -167,8 +167,7 @@ app.run(function($ionicPlatform) {
             scope.task = task;
             task.due = task.due || new Date();
 
-            // An elaborate, custom popup
-            var myPopup = $ionicPopup.show({
+            var datePickPopUp = $ionicPopup.show({
               template: '<input type="datetime-local" ng-model="task.due">',
               title: 'Alarm',
               subTitle: 'The time you want to be reminded',
@@ -189,7 +188,7 @@ app.run(function($ionicPlatform) {
               ]
             });
 
-            myPopup.then(function(res) {
+            datePickPopUp.then(function(res) {
               if(!res) {
                 scope.task.due = undefined;
               }

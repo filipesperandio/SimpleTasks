@@ -3,7 +3,8 @@ describe('AuthWrapper', function () {
 
   var Auth = { 
     $authWithOAuthRedirect: stub().resolves({}),
-    $onAuth: stub()
+    $onAuth: stub(),
+    $unauth: stub()
   };
   var $rootScope = { $emit: stub() };
 
