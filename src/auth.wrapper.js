@@ -33,6 +33,7 @@ function AuthWrapper (Auth, $rootScope) {
 
   function logout () {
     console.log('>>> Logging out');
+    Auth.$unauth();
     userLoggedOut();
   }
 

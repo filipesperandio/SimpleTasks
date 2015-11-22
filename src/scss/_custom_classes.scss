@@ -106,6 +106,22 @@ button i.material-icons {
   line-height: inherit;
 }
 
+button.button-positive.button-facebook {
+  i.icon {
+    padding-right: $item-padding;
+  }
+  border: 0;
+  background-color: #3F5AA6;
+  color: #FFF;
+  text-align: left;
+  width: 75%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
 button.button.button-clear.checked,
 p.checked,
 li.checked {

@@ -5,9 +5,6 @@ require('./ionic.add.platform.class');
 require('./ionic.lock.orientation');
 require('./f');
 
-// Currently this is only needed by datepicker-for-ionic
-var $ = require('./lib/zepto/zepto.min'); // jshint ignore: line
-
 require('angular-loading-bar');
 require('angular-local-storage');
 require('angular-focus-it');
@@ -37,7 +34,6 @@ app.config(['cfpLoadingBarProvider', function (provider) {
 app.config(['localStorageServiceProvider', function (provider) {
   provider.setPrefix('myapp');
 }]);
-
 
 function popTask (task) {
   var interval = task.due - new Date();
@@ -77,19 +73,38 @@ app.run(function($ionicPlatform) {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: function($rootScope, $scope, authWrapper) {
+    controller: function($state, $rootScope, $ionicLoading, $scope, authWrapper, $timeout) {
 
-      $scope.facebookLogin = function facebookLogin () {
-        if($rootScope.user) return;
-        authWrapper.login('facebook');
-      };
+      $rootScope.view = {};
 
-      $scope.logout = authWrapper.logout;
+      $timeout(function () {
+        console.log('check user', $rootScope.view.user);
+        if(!$rootScope.view.user) {
+          $rootScope.$emit('logout');
+        } else {
+          $rootScope.$emit('user-loaded', $rootScope.view.user);
+        }
 
-      $rootScope.$on('logout', function () {
-        $rootScope.user = undefined;
+      }, 30000);
+
+      $rootScope.$on('login', function(event, user) {
+        if(!user) {
+          console.log('User not logged in');
+          $rootScope.$emit('logout');
+          return;
+        }
+        console.log('user uid', user.uid);
+        $rootScope.view.user = user;
+        $rootScope.$emit('user-loaded', user);
       });
 
+      $rootScope.$on('logout', function () {
+        console.log('logout');
+        $ionicLoading.hide();
+        $rootScope.view.user = undefined;
+      });
+
+      $scope.logout = authWrapper.logout;
 
       $scope.tasklist = {
         lists: [],
@@ -100,6 +115,13 @@ app.run(function($ionicPlatform) {
         $scope.tasklist.lists.unshift({name: listName});
         $scope.tasklist.newList.name = '';
       };
+
+      $scope.facebookLogin = function facebookLogin () {
+        $ionicLoading.show();
+        console.log('>>> Login', $rootScope.view.user);
+        authWrapper.login('facebook');
+      };
+
     }
   })
 
@@ -108,21 +130,26 @@ app.run(function($ionicPlatform) {
     views: {
       'menuContent': {
         templateUrl: 'templates/tasklist.html',
-        controller: [ '$scope', '$rootScope', '$stateParams', '$ionicPopup', '$firebaseArray', 'firebaseRef',
-          function($scope, $rootScope, $stateParams, $ionicPopup, $firebaseArray, firebaseRef) {
+        controller: function($state, $ionicPopup, $ionicLoading, $scope, $rootScope, $stateParams, $firebaseArray, firebaseRef) {
+          var TaskListFactory = require('./task.list');
+
+          var listName = $stateParams.name || 'personal';
 
           $scope.tasklist = {
-            name: $stateParams.name,
+            name: listName,
             tasks: [],
             newTask: {},
           };
 
-          $rootScope.$on('login', function(event, user) {
-            console.log('get uid', user.uid);
-            $rootScope.user = user;
-            $scope.tasklist.tasks = $firebaseArray(firebaseRef.child("/usertasks/"+user.uid));
-          });
+          function loadTasks () {
+            console.log('Loading tasks...');
+            $scope.tasklist.tasks = $firebaseArray(firebaseRef.child("/usertasks/"+$rootScope.view.user.uid));
+            $scope.tasklist.tasks.$loaded().then($ionicLoading.hide);
+          }
 
+          if($rootScope.view.user) loadTasks();
+
+          $rootScope.$on('user-loaded', loadTasks);
 
           $scope.save = function (task) {
             $scope.tasklist.tasks.$save(task);
@@ -172,12 +199,14 @@ app.run(function($ionicPlatform) {
             });
           };
 
-          $scope.createTask = function(task) {
-            $scope.tasklist.tasks.$add({title: task, done:false, createdAt:  Firebase.ServerValue.TIMESTAMP});
+          $scope.createTask = function(taskTitle) {
+            var newTask = {title: taskTitle, done:false, createdAt:  Firebase.ServerValue.TIMESTAMP};
+            console.log(JSON.stringify(newTask));
+            $scope.tasklist.tasks.$add(newTask);
             $scope.tasklist.newTask.title = '';
           };
 
-        }]
+        }
       }
     }
   });
