@@ -131,7 +131,7 @@ app.run(function($ionicPlatform) {
     views: {
       'menuContent': {
         templateUrl: 'templates/tasklist.html',
-        controller: function($state, $ionicPopup, $ionicLoading, $scope, $rootScope, $stateParams, $firebaseArray, firebaseRef) {
+        controller: function($state, $ionicPopup, $ionicLoading, $scope, $rootScope, $stateParams, $firebaseArray, firebaseRef) { // jshint ignore:line
           var listName = $stateParams.name || 'personal';
 
           $scope.tasklist = {

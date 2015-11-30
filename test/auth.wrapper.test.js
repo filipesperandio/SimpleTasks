@@ -2,7 +2,7 @@ describe('AuthWrapper', function () {
   var AuthWrapper = require('src/auth.wrapper');
 
   var Auth = { 
-    $authWithOAuthRedirect: stub().resolves({}),
+    $authWithOAuthPopup: stub().resolves({}),
     $onAuth: stub(),
     $unauth: stub()
   };
@@ -17,16 +17,16 @@ describe('AuthWrapper', function () {
 
   it('login uses redirect method', function () {
     authWrapper.login('google');
-    assert.calledWith(Auth.$authWithOAuthRedirect, 'google');
+    assert.calledWith(Auth.$authWithOAuthPopup, 'google');
   });
 
   it('emits a logout event', function () {
-    authWrapper.userLoggedOut();
+    authWrapper.notify();
     assert.calledWith($rootScope.$emit, 'logout');
   });
 
   it('emits a login event', function () {
-    authWrapper.userLoggedIn(authData);
+    authWrapper.notify(authData);
     assert.calledWith($rootScope.$emit, 'login', authData);
   });
 

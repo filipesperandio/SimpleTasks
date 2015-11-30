@@ -1,49 +1,27 @@
 function AuthWrapper (Auth, $rootScope) {
 
-  function userLoggedIn (authData) {
-    $rootScope.$emit('login', authData);
-  }
-
-  function userLoggedOut () {
-    $rootScope.$emit('logout');
+  function notify (authData) {
+    if(authData) {
+      $rootScope.$emit('login', authData);
+    } else {
+      $rootScope.$emit('logout');
+    }
   }
 
   function login (provider) {
-    console.log('>>> Logging in');
-
-    Auth.$authWithOAuthRedirect(provider).catch(function(error) {
-
-      console.log('Not Logged in ', error);
-
-      if (error.code === "TRANSPORT_UNAVAILABLE") {
-
-        Auth.$authWithOAuthPopup("facebook").then(function(authData) {
-          console.log('Logged in with popup', authData);
-          userLoggedIn(authData);
-        });
-
-      } else {
-
-        console.log(error);
-
-      }
-
-    });
+    Auth.$authWithOAuthPopup(provider).then(notify);
   }
 
   function logout () {
-    console.log('>>> Logging out');
     Auth.$unauth();
-    userLoggedOut();
   }
 
-  Auth.$onAuth(userLoggedIn);
+  Auth.$onAuth(notify);
 
   return {
     login: login,
     logout: logout,
-    userLoggedIn: userLoggedIn,
-    userLoggedOut: userLoggedOut
+    notify: notify
   };
 }
 
