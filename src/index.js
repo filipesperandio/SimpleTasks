@@ -192,16 +192,15 @@ app.run(function($ionicPlatform) {
             datePickPopUp.then(function(res) {
               if(!res) {
                 scope.task.due = undefined;
+              } else {
+                popTask(scope.task);
               }
-              popTask(scope.task);
               scope.save(scope.task);
-              console.log('Tapped!', res);
             });
           };
 
           $scope.createTask = function(taskTitle) {
             var newTask = {title: taskTitle, done:false, createdAt:  Firebase.ServerValue.TIMESTAMP};
-            console.log(JSON.stringify(newTask));
             $scope.tasklist.tasks.$add(newTask);
             $scope.tasklist.newTask.title = '';
           };
