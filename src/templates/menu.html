@@ -24,29 +24,24 @@
 
 
   <!-- Menu view -->
-  <ion-side-menu side="left" ng-init="features.tasklists=false" style="background:lightgray;">
+  <ion-side-menu side="left" style="background:lightgray;">
 
     <ion-header-bar class="bar-dark" align-title="left">
-          <h1  style="margin-left:0" class="title">{{ features.tasklists ? "Task Lists" : "SimpleTasks" }}</h1>
+          <h1  style="margin-left:0" class="title">{{ features.multipleTasklists ? "Task Lists" : "SimpleTasks" }}</h1>
     </ion-header-bar>
 
-    <form ng-submit="createList(tasklist.newList.name)" class="bar  bar-subheader  bar-dark" ng-show="features.tasklists">
+    <form ng-submit="createList(tasklist.newList.name)" class="bar  bar-subheader  bar-dark" ng-show="features.multipleTasklists">
       <input type="text" placeholder="new list" class="new-item  full-width" ng-model="tasklist.newList.name">
     </form>
 
 
-    <ion-content class="has-subheader" ng-show="features.tasklists">
+    <ion-content class="has-subheader" ng-show="features.multipleTasklists">
       <ion-list>
         <ion-item menu-close href="#/app/tasks/{{list.name}}" 
                              class="item-icon-left"
                              ng-repeat="list in tasklist.lists">
           <i class="icon  material-icons">view_list</i>
           {{list.name}} 
-        </ion-item>
-
-        <ion-item menu-close ng-click="facebookLogin()" class="positive  item-icon-left">
-          <i class="icon  material-icons">power_settings_new</i>
-          Login
         </ion-item>
       </ion-list>
     </ion-content>

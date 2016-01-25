@@ -24,6 +24,7 @@ var app = angular.module('simple-tasks', [
   'firebase'
 ]);
 
+app.run([ '$rootScope', require('./feature.flags')]);
 
 // Loading Bar  ================================================================
 app.config(['cfpLoadingBarProvider', function (provider) {
@@ -151,6 +152,12 @@ app.run(function($ionicPlatform) {
           if($rootScope.view.user) loadTasks();
 
           $rootScope.$on('user-loaded', loadTasks);
+
+          $scope.doneAll = function doneAll () {
+            $scope.tasklist.tasks.forEach(function (task) {
+              task.done = true;
+            });
+          };
 
           $scope.save = function (task) {
             $scope.tasklist.tasks.$save(task);

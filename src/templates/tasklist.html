@@ -4,7 +4,7 @@
   </ion-nav-title>
 
   <ion-nav-buttons side="right">
-    <button class="button  button-clear" ng-click="clearDone()">
+    <button class="button  button-clear" ng-click="doneAll()">
       <i class="material-icons">done_all</i>
     </button>
     <button class="button  button-clear" ng-click="clearDone()">
@@ -34,16 +34,18 @@
 
         <span class="icon  top-layer" ng-click="pickDate(task)">
 
-          <p ng-class="{'checked': task.done}" 
-             ng-show="task.due"> 
+          <div ng-if="features.alarm">
+            <p ng-class="{'checked': task.done}" 
+               ng-show="task.due"> 
             <small>{{ task.due | date:'MMM dd hh:mm a' }}</small> 
-          </p>
+            </p>
 
-          <button class="button  button-clear  button-dark  material-icons"
-                  ng-class="{'checked': task.done}" 
-                  ng-hide="task.due">
-            alarm
-          </button>
+            <button class="button  button-clear  button-dark  material-icons"
+                    ng-class="{'checked': task.done}" 
+                    ng-hide="task.due">
+              alarm
+            </button>
+          </div>
 
         </span>
 
