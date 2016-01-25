@@ -1,4 +1,7 @@
-<ion-view ng-show="view.user" view-title="{{tasklist.name}}">
+<ion-view ng-show="view.user">
+  <ion-nav-title>
+    {{ view.user ? "Task: " + tasklist.name : "Simple Tasks"}}
+  </ion-nav-title>
 
   <ion-nav-buttons side="right">
     <button class="button  button-clear" ng-click="clearDone()">

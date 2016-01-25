@@ -24,21 +24,19 @@
 
 
   <!-- Menu view -->
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" ng-init="features.tasklists=false" style="background:lightgray;">
 
     <ion-header-bar class="bar-dark" align-title="left">
-          <h1  style="margin-left:0"
-            class="title"> Task Lists </h1>
+          <h1  style="margin-left:0" class="title">{{ features.tasklists ? "Task Lists" : "SimpleTasks" }}</h1>
     </ion-header-bar>
 
-      <form ng-submit="createList(tasklist.newList.name)" class="bar  bar-subheader  bar-dark">
-        <input type="text" placeholder="new list" class="new-item  full-width" ng-model="tasklist.newList.name">
-      </form>
+    <form ng-submit="createList(tasklist.newList.name)" class="bar  bar-subheader  bar-dark" ng-show="features.tasklists">
+      <input type="text" placeholder="new list" class="new-item  full-width" ng-model="tasklist.newList.name">
+    </form>
 
 
-    <ion-content class="has-subheader">
+    <ion-content class="has-subheader" ng-show="features.tasklists">
       <ion-list>
-
         <ion-item menu-close href="#/app/tasks/{{list.name}}" 
                              class="item-icon-left"
                              ng-repeat="list in tasklist.lists">
@@ -50,15 +48,12 @@
           <i class="icon  material-icons">power_settings_new</i>
           Login
         </ion-item>
-
-        <ion-item menu-close ng-click="logout()" class="assertive  item-icon-left">
-          <i class="icon  material-icons">power_settings_new</i>
-          Logout
-        </ion-item>
-
       </ion-list>
-
     </ion-content>
+
+    <div menu-close ng-click="logout()" class="bar  bar-footer  assertive  item-icon-left" style="padding-top: 12px; padding-bottom: 12px;">
+      <i class="icon  material-icons">power_settings_new</i> Logout
+    </div>
 
   </ion-side-menu>
 

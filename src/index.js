@@ -61,6 +61,7 @@ app.run(function($ionicPlatform) {
       cordova.plugins.Keyboard.disableScroll(true);
 
     }
+
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       window.StatusBar.styleDefault();
