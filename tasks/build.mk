@@ -6,10 +6,11 @@ build.watch: node_modules/nodemon
 build: javascript stylesheet rest
 
 .PHONY: javascript
-javascript: $(output_js)
+javascript: node_modules/debowerify node_modules/configurify node_modules/browserify $(output_js) 
 
 .PHONY: ENV.%
-ENV.%:; @mkdir -p tmp; echo $($*) > tmp/$*
+ENV.%:
+	scripts/misc/gen.var.sh $* $($*) > tmp/$*
 
 output_js_dependencies = node_modules $(bower) $(source_js)
 ifneq ($(CONNECT_HOST),$(shell test -e tmp/CONNECT_HOST && cat tmp/CONNECT_HOST))

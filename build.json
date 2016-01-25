@@ -1,0 +1,19 @@
+{
+     "android": {
+         "debug": {
+             "keystore": "debug.keystore",
+             "storePassword": "android",
+             "alias": "android",
+             "password" : "android",
+             "keystoreType": ""
+         },
+         "release": {
+             "keystore": "android.keystore",
+             "storePassword": "whatshouldisay",
+             "alias": "whatshouldisay",
+             "password" : "whatshouldisay",
+             "keystoreType": ""
+         }
+     }
+ }
+

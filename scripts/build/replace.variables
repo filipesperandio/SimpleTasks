@@ -1,6 +1,9 @@
 #!/bin/bash
 set -eu
 
+# WIP - conflicting: exported var vs. env file
+source $SOURCE_ENV_FILE
+
 : ${APP_VERSION:='0.1.0'}
 perl -i -pe "s/{{APP_VERSION}}/${APP_VERSION}/" $1
 
