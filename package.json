@@ -1,7 +1,7 @@
 {
   "private": "true",
   "engines": {
-    "node": "0.12.7"
+    "node": "4.1.2"
   },
   "devDependencies": {
     "angularfire": "^1.1.3",
