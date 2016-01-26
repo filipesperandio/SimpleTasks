@@ -15,7 +15,7 @@ output_rest = $(patsubst $(source)/%,$(output)/%,$(source_rest))
 
 export BUILD_NUMBER    ?= 0000
 export ENV_LABEL       ?= dev
-export APP_VERSION     ?= 0.1.0
+export APP_VERSION     ?= 0.1.1
 export APP_TAG         ?= $(APP_VERSION)-$(BUILD_NUMBER)
 export SOURCE_ENV_FILE	= environments/${ENV_LABEL}.env
 
