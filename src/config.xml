@@ -41,6 +41,7 @@
   <plugin name="cordova-plugin-splashscreen" source="npm"/>
   <plugin name="cordova-plugin-whitelist" version="1.0.0" source="npm"/>
   <plugin name="cordova-plugin-screen-orientation" source="npm"/>
+  <plugin name="de.appplant.cordova.plugin.local-notification" spec="https://github.com/katzer/cordova-plugin-local-notifications" />
 
   <platform name="ios">
     <icon src="resources/ios/icon-{{ENV_LABEL}}/icon.png"/>

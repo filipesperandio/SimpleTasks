@@ -52,6 +52,20 @@ app.factory('userFactory', [ '$rootScope', function ($rootScope) {
 
 app.factory('TaskList', [ 'firebaseRef', '$firebaseArray', 'userFactory', require('./task.list') ]);
 
+function notificationTest () {
+  cordova.plugins.notification.local.schedule({
+    id: 10,
+    title: "Hey reminder for you!",
+    text: "task test 1",
+    at: new Date()
+  });
+
+  cordova.plugins.notification.local.on("click", function (notification) {
+    console.log("Notification", notification);
+    alert(notification.text);
+  }, {});
+}
+
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard for form inputs)
@@ -65,6 +79,8 @@ app.run(function($ionicPlatform) {
       // org.apache.cordova.statusbar required
       window.StatusBar.styleDefault();
     }
+
+    notificationTest();
   });
 })
 
