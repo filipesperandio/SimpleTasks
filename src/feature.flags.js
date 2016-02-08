@@ -1,7 +1,7 @@
 module.exports = function ($rootScope) {
   var features = {
     multipleTasklists: false,
-    alarm: false
+    alarm: true
   };
 
   $rootScope.features = features;

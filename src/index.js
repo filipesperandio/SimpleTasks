@@ -156,8 +156,19 @@ app.run(function($ionicPlatform) {
             tasklist.doneAll();
           };
 
+          function processTask (task) {
+            console.log(task);
+            cordova.plugins.notification.local.schedule({
+              id: '1',
+              title: task.title,
+              text: "Your attention is required!",
+              at: task.due
+            });
+          }
+
           $scope.save = function (task) {
             tasklist.save(task);
+            processTask(task);
           };
 
           $scope.clearDone = function clearDone () {
