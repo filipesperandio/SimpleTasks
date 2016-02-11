@@ -26,7 +26,8 @@
 
   f.wrap = function (fn) {
     return function () {
-      return fn.apply(null, arguments) };
+      return fn.apply(null, arguments);
+    };
   };
 
 })(typeof window !== 'undefined' ? window : global);

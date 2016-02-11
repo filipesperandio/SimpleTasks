@@ -36,13 +36,6 @@ app.config(['localStorageServiceProvider', function (provider) {
   provider.setPrefix('myapp');
 }]);
 
-function popTask (task) {
-  var interval = task.due - new Date();
-  setTimeout(function() {
-    window.alert(task.title);
-  }, interval);
-}
-
 app.service("firebaseRef", function() {
   return new Firebase("https://simple-tasks.firebaseio.com");
 });
@@ -53,6 +46,11 @@ app.factory('Auth', [ 'firebaseRef', '$firebaseAuth', function (firebaseRef, $fi
 
 app.service('authWrapper', require('./auth.wrapper'));
 
+app.factory('userFactory', [ '$rootScope', function ($rootScope) {
+  return function () { return $rootScope.view.user; };
+}]);
+
+app.factory('TaskList', [ 'firebaseRef', '$firebaseArray', 'userFactory', require('./task.list') ]);
 
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -75,34 +73,20 @@ app.run(function($ionicPlatform) {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: function($state, $rootScope, $ionicLoading, $scope, authWrapper, $timeout) {
+    controller: function($state, $rootScope, $ionicLoading, $scope, authWrapper) {
 
       $rootScope.view = {};
 
-      function checkUser () {
-        console.log('Checking user', $rootScope.view.user);
-        if(!$rootScope.view.user) {
-          $rootScope.$emit('logout');
-        } else {
-          $rootScope.$emit('user-loaded', $rootScope.view.user);
-        }
-      }
-
-      $timeout(checkUser, 30000);
-
       $rootScope.$on('login', function(event, user) {
         if(!user) {
-          console.log('User not logged in');
           $rootScope.$emit('logout');
           return;
         }
-        console.log('user uid', user.uid);
         $rootScope.view.user = user;
         $rootScope.$emit('user-loaded', user);
       });
 
       $rootScope.$on('logout', function () {
-        console.log('logout');
         $ionicLoading.hide();
         $rootScope.view.user = undefined;
       });
@@ -121,7 +105,6 @@ app.run(function($ionicPlatform) {
 
       $scope.facebookLogin = function facebookLogin () {
         $ionicLoading.show();
-        console.log('>>> Login', $rootScope.view.user);
         authWrapper.login('facebook');
       };
 
@@ -133,20 +116,20 @@ app.run(function($ionicPlatform) {
     views: {
       'menuContent': {
         templateUrl: 'templates/tasklist.html',
-        controller: function($state, $ionicPopup, $ionicLoading, $scope, $rootScope, $stateParams, $firebaseArray, firebaseRef) { // jshint ignore:line
+        controller: function(TaskList, $ionicPopup, $ionicLoading, $scope, $rootScope, $stateParams) {
           var listName = $stateParams.name || 'personal';
+          var tasklist;
 
-          $scope.tasklist = {
+          $scope.vm = {
             name: listName,
             tasks: [],
             newTask: {},
           };
 
           function loadTasks () {
-            console.log('Loading tasks...');
             $ionicLoading.show();
-            $scope.tasklist.tasks = $firebaseArray(firebaseRef.child("/usertasks/"+$rootScope.view.user.uid));
-            $scope.tasklist.tasks.$loaded().then($ionicLoading.hide);
+            tasklist = new TaskList('personal', $ionicLoading.hide);
+            $scope.vm.tasks = tasklist.all();
           }
 
           if($rootScope.view.user) loadTasks();
@@ -154,29 +137,25 @@ app.run(function($ionicPlatform) {
           $rootScope.$on('user-loaded', loadTasks);
 
           $scope.doneAll = function doneAll () {
-            $scope.tasklist.tasks.forEach(function (task) {
-              task.done = true;
-            });
+            tasklist.doneAll();
           };
 
           $scope.save = function (task) {
-            $scope.tasklist.tasks.$save(task);
-            console.log('saving', task);
+            tasklist.save(task);
           };
 
           $scope.clearDone = function clearDone () {
-            $scope.tasklist.tasks.forEach(function (task) {
-              if(task.done) $scope.tasklist.tasks.$remove(task);
-            });
+            tasklist.clearDone();
           };
 
           $scope.pickDate = function pickDate (task) {
-            var scope = $scope;
-            scope.task = task;
-            task.due = task.due || new Date();
+            var scope = $scope.$new();
+            scope.vm = {
+              date : task.due ? new Date(task.due) : new Date()
+            };
 
             var datePickPopUp = $ionicPopup.show({
-              template: '<input type="datetime-local" ng-model="task.due">',
+              template: '<input type="datetime-local" ng-model="vm.date">',
               title: 'Alarm',
               subTitle: 'The time you want to be reminded',
               scope: scope,
@@ -185,31 +164,26 @@ app.run(function($ionicPlatform) {
                 {
                   text: '<b>Set Alarm</b>',
                   type: 'button-dark',
-                  onTap: function(e) {
-                    if (!scope.task.due) {
-                      e.preventDefault();
-                    } else {
-                      return scope.task.due;
-                    }
+                  onTap: function() {
+                    return scope.vm.date;
                   }
                 }
               ]
             });
 
-            datePickPopUp.then(function(res) {
-              if(!res) {
-                scope.task.due = undefined;
-              } else {
-                popTask(scope.task);
-              }
-              scope.save(scope.task);
+            datePickPopUp.then(function(date) {
+              task.due = !!date ? date.toJSON() : undefined;
+              tasklist.save(task);
             });
           };
 
           $scope.createTask = function(taskTitle) {
-            var newTask = {title: taskTitle, done:false, createdAt:  Firebase.ServerValue.TIMESTAMP};
-            $scope.tasklist.tasks.$add(newTask);
-            $scope.tasklist.newTask.title = '';
+            tasklist.add({
+              title: taskTitle,
+              done: false,
+              createdAt: Firebase.ServerValue.TIMESTAMP
+            });
+            $scope.vm.newTask.title = '';
           };
 
         }

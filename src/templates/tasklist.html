@@ -1,6 +1,6 @@
 <ion-view ng-show="view.user">
   <ion-nav-title>
-    {{ view.user ? "Task: " + tasklist.name : "Simple Tasks"}}
+    {{ view.user ? "Task: " + vm.name : "Simple Tasks"}}
   </ion-nav-title>
 
   <ion-nav-buttons side="right">
@@ -13,16 +13,16 @@
   </ion-nav-buttons>
 
   <form id="form-new-task"
-    ng-submit="createTask(tasklist.newTask.title)"
+    ng-submit="createTask(vm.newTask.title)"
     class="bar  bar-subheader  bar-dark">
-    <input type="text" id="new-task" placeholder="new task" class="full-width  input-bottom" ng-model="tasklist.newTask.title">
+    <input type="text" id="new-task" placeholder="new task" class="full-width  input-bottom" ng-model="vm.newTask.title">
   </form>
 
   <ion-content class="has-header  has-subheader">
 
     <ul class="list">
 
-      <li collection-repeat="task in tasklist.tasks | orderBy: '-createdAt'" 
+      <li collection-repeat="task in vm.tasks | orderBy: '-createdAt'" 
           ng-class="{'checked': task.done }"
           class="blue-background  fade-in-white  item  item-checkbox  item-icon-right">
 
