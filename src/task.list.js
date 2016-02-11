@@ -16,7 +16,7 @@ function TaskListFactory (firebase, firebaseArray, userFactory) {
     }
 
     function save (task) {
-      tasks.$save(task);
+      return tasks.$save(task);
     }
 
     function all () {

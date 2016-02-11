@@ -1,8 +1,10 @@
+var TaskListFactory = require('src/task.list');
+
 describe('Task List', function () {
   var firebaseArrayMock = {
     $add: stub(),
     $remove: stub(),
-    $save: stub(),
+    $save: stub().resolves('saved'),
     $loaded: sinon.stub().resolves('loaded')
   };
 
@@ -21,7 +23,6 @@ describe('Task List', function () {
 
   var callback = stub();
 
-  var TaskListFactory = require('src/task.list');
   var firebase = { child: stub().returns('ref') };
   var task = {title: 'newtask'};
   var TaskList = new TaskListFactory(firebase, firebaseArray, userFactory);
@@ -69,6 +70,12 @@ describe('Task List', function () {
     var done = taskList.all().filter(function(t) { return t.done });
     assert.lengthOf(done, 2);
     assert.called(firebaseArrayMock.$save);
+  });
+
+  it('returns a promise when saving', function () {
+    var tasks = taskList.all();
+    tasks[0]['done'] = true;
+    return assert.eventually.deepEqual(taskList.save(tasks[0]), 'saved');
   });
 
 });
