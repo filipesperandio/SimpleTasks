@@ -24,4 +24,9 @@
     return function not () { return !toNegate.apply(this, arguments); };
   };
 
+  f.wrap = function (fn) {
+    return function () {
+      return fn.apply(null, arguments) };
+  };
+
 })(typeof window !== 'undefined' ? window : global);
