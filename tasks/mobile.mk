@@ -11,5 +11,5 @@ ios: node_modules/phonegap-build-api node_modules/qrcode-terminal $(dist_zip)
 		> artifacts/ios-$(APP_TAG)-$(TARGET_ENV).ipa
 
 .PHONY: android
-android: clean.mobile node_modules platforms/android config.xml build
+android: node_modules platforms/android config.xml build
 	scripts/android.sh

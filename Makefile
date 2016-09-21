@@ -13,9 +13,9 @@ output_css  = $(output)/css/index.css
 output_js   = $(output)/js/index.js
 output_rest = $(patsubst $(source)/%,$(output)/%,$(source_rest))
 
-export BUILD_NUMBER    ?= 0000
+export BUILD_NUMBER    ?= 0140
 export ENV_LABEL       ?= dev
-export APP_VERSION     ?= 0.1.2
+export APP_VERSION     ?= 0.1.4
 export APP_TAG         ?= $(APP_VERSION)-$(BUILD_NUMBER)
 export SOURCE_ENV_FILE	= environments/${ENV_LABEL}.env
 
