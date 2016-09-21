@@ -33,7 +33,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-push": "make && scripts/sync.shrinkwrap"
+      "pre-push": "make"
     }
   }
 }
