@@ -10,8 +10,8 @@ android {
         applicationId "com.filipesperandio.simpletasks"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 200
+        versionName "2.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -21,6 +21,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    signingConfigs {
+      release {
+        storeFile file("../certs/android.keystore")
+          storePassword 'whatshouldisay'
+          keyAlias 'whatshouldisay'
+          keyPassword 'whatshouldisay'
+      }
+    }
+
 
     testOptions {
         unitTests.returnDefaultValues = true
