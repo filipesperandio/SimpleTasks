@@ -7,12 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ListView
-        android:id="@+id/list"
+    <components.ItemsView
+        android:id="@+id/tasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
         android:dividerHeight="0dp">
-    </ListView>
+    </components.ItemsView>
 
 </LinearLayout>
