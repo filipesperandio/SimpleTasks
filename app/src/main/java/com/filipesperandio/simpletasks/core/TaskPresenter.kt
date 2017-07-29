@@ -18,12 +18,14 @@ class TaskPresenter(parent: ViewGroup, viewType: Int, inflater: LayoutInflater) 
             return;
         }
         val taskTitle = itemView.findViewById(R.id.taskTitle) as TextView
-        taskTitle.text = item.toString()
+        taskTitle.text = item.title
 
-        RxView.clicks(itemView.findViewById(R.id.taskDone)).subscribe {
+        val taskDone = itemView.findViewById(R.id.taskDone) as CheckBox
+        taskDone.setChecked(item.done)
+
+        RxView.clicks(taskDone).subscribe {
             item.done = !item.done;
             Log.d("TAG", item.toString())
         };
-
     }
 }
