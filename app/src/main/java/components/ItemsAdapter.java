@@ -45,7 +45,7 @@ public class ItemsAdapter<T> extends RecyclerView.Adapter {
     }
 
     public void append(List<T> items) {
-        this.items.addAll(items);
+        this.items.addAll(0, items);
         notifyDataSetChanged();
     }
 
