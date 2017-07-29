@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import com.filipesperandio.simpletasks.R
 import com.jakewharton.rxbinding2.view.RxView

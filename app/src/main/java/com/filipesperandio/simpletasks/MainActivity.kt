@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.filipesperandio.simpletasks.core.Task
 import com.filipesperandio.simpletasks.core.TaskPresenter
+import com.jakewharton.rxbinding2.view.RxView
 import components.PresenterFactory
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -24,8 +26,17 @@ class MainActivity : AppCompatActivity() {
 
         tasks.presenterFactory(TaskPresenterFactory())
 
-        
+
         tasksBus.subscribe { tasks.append(it) }
+
+        RxView.clicks(inputOk).subscribe {
+            val text = inputTask.text.toString()
+
+            if(text.isNotEmpty()) {
+                tasksBus.onNext(Task(text, text.contains("done"), Date().time))
+                inputTask.text.clear()
+            }
+        };
 
     }
 }
