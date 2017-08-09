@@ -7,5 +7,6 @@ Development
 1. Reading the tutorial https://guides.github.com/introduction/flow/
 2. Install android studio
 3. Clone this repository
+4. Create a new branch
 
 
