@@ -4,6 +4,8 @@ This will be a new version for the [app](https://play.google.com/store/apps/deta
 
 Development
 
-1. Install android studio
-2. clone this repository
+1. Reading the tutorial https://guides.github.com/introduction/flow/
+2. Install android studio
+3. Clone this repository
+
 
