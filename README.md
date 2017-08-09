@@ -6,6 +6,10 @@ Development
 
 1. Reading the tutorial https://guides.github.com/introduction/flow/
 2. Install android studio
+<<<<<<< HEAD
 3. Clone this repository
+=======
+3. clone this repository
+>>>>>>> f13fddfd80bc9cbdfbbc3d53950f958769b8a180
 
 
