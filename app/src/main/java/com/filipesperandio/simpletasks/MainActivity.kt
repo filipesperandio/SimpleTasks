@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         Observable.interval(1, TimeUnit.SECONDS)
                 .doOnNext { it + 1 }
-                .take(5)
+                .take(10)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     val task = Task(it.toString(), false, it)
