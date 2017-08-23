@@ -24,15 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         tasks.presenterFactory(TaskPresenterFactory())
 
-        Observable.interval(1, TimeUnit.SECONDS)
-                .doOnNext { it + 1 }
-                .take(5)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    val task = Task(it.toString(), false, it)
-                    tasksBus.onNext(task)
-                }
-
+        
         tasksBus.subscribe { tasks.append(it) }
 
     }
