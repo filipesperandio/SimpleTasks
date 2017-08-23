@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-            tasks.presenterFactory(TaskPresenterFactory())
+        tasks.presenterFactory(TaskPresenterFactory())
 
         
         tasksBus.subscribe { tasks.append(it) }
