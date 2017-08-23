@@ -26,14 +26,13 @@ class MainActivity : AppCompatActivity() {
 
         tasks.presenterFactory(TaskPresenterFactory())
 
-
         tasksBus.subscribe { tasks.append(it) }
 
         RxView.clicks(inputOk).subscribe {
             val text = inputTask.text.toString()
 
             if(text.isNotEmpty()) {
-                tasksBus.onNext(Task(text, text.contains("done"), Date().time))
+                tasksBus.onNext(Task(title = text, done = text.contains("done")))
                 inputTask.text.clear()
             }
         };

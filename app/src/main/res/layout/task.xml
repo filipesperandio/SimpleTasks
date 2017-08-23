@@ -18,9 +18,11 @@
         android:layout_weight="1"
         tools:text="TASK1"/>
 
-    <android.support.v7.widget.AppCompatButton
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/edit_task_button"
         android:layout_width="40dp"
         android:layout_height="45dp"
+        android:src="@drawable/edit"
         android:textColor="@color/light"/>
 
     <android.support.v7.widget.AppCompatButton

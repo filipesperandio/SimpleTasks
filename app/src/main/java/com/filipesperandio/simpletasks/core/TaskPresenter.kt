@@ -24,8 +24,13 @@ class TaskPresenter(parent: ViewGroup, viewType: Int, inflater: LayoutInflater) 
         taskDone.setChecked(item.done)
 
         RxView.clicks(taskDone).subscribe {
-            item.done = !item.done;
+            item.done = !item.done
             Log.d("TAG", item.toString())
         };
+
+        RxView.clicks(itemView.findViewById(R.id.edit_task_button)).subscribe {
+            Log.d("OK", "okok" + item.id)
+        }
+
     }
 }
