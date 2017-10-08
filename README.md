@@ -1,5 +1,9 @@
 ## Getting Started
 
+Technology:
+https://github.com/zachfitz/Ionic-Material
+https://github.com/codebusking/react-pwa-guide-kit
+
 ```bash
 $ make
 ```
@@ -15,19 +19,4 @@ $ make test.watch  # re-run all tests if any file changes
 
 ```bash
 $ make serve # run a local browser-based client with everything you need to start writing code
-```
-
-## Installing Fonts
-
-* Step 1: Download font file and CSS
-
-```
-./scripts/download_fonts.sh <font_url>
-./scripts/download_fonts.sh https://fonts.googleapis.com/icon?family=Material+Icons
-```
-
-* Step 2: Import CSS on `index.scss`
-
-```
-@import "fonts/Material_Icons/Material_Icons";
 ```
