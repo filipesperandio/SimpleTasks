@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-
-./scripts/docker/install.required.node
-./scripts/docker/symlink.node_modules
-
-echo "=> Installing npm packages..."
-npm install

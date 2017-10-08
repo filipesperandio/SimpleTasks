@@ -1,2 +1,0 @@
-environments/*.env filter=git-crypt diff=git-crypt
-build.json filter=git-crypt diff=git-crypt
