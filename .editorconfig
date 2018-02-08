@@ -1,0 +1,15 @@
+root = true
+
+[*]
+end_of_line = LF
+trim_trailing_whitespace = true
+insert_final_newline = true
+charset = utf-8
+indent_style = space
+indent_size = 2
+
+[{package.json,bower.json,config.xml,src/package.json}]
+insert_final_newline = false
+
+[{Makefile,*.mk}]
+indent_style = tab

@@ -1,0 +1,56 @@
+<ion-side-menus enable-menu-with-back-views="false">
+
+
+  <!-- Content view -->
+  <ion-side-menu-content>
+
+    <ion-nav-bar class="bar-dark" align-title="left">
+
+      <ion-nav-buttons side="left">
+        <button class="button  button-icon  button-clear  ion-navicon" menu-toggle="left"> </button>
+      </ion-nav-buttons>
+
+    </ion-nav-bar>
+
+
+    <button ng-hide="view.user" class="button button-positive button-facebook" ng-click="facebookLogin()">
+      <i class="icon ion-social-facebook"></i>
+      Sign in with Facebook 
+    </button>
+
+    <ion-nav-view name="menuContent"></ion-nav-view>
+
+  </ion-side-menu-content>
+
+
+  <!-- Menu view -->
+  <ion-side-menu side="left" style="background:lightgray;">
+
+    <ion-header-bar class="bar-dark" align-title="left">
+          <h1  style="margin-left:0" class="title">{{ features.multipleTasklists ? "Task Lists" : "SimpleTasks" }}</h1>
+    </ion-header-bar>
+
+    <form ng-submit="createList(tasklist.newList.name)" class="bar  bar-subheader  bar-dark" ng-show="features.multipleTasklists">
+      <input type="text" placeholder="new list" class="new-item  full-width" ng-model="tasklist.newList.name">
+    </form>
+
+
+    <ion-content class="has-subheader" ng-show="features.multipleTasklists">
+      <ion-list>
+        <ion-item menu-close href="#/app/tasks/{{list.name}}" 
+                             class="item-icon-left"
+                             ng-repeat="list in tasklist.lists">
+          <i class="icon  material-icons">view_list</i>
+          {{list.name}} 
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+    <div menu-close ng-click="logout()" class="bar  bar-footer  assertive  item-icon-left" style="padding-top: 12px; padding-bottom: 12px;">
+      <i class="icon  material-icons">power_settings_new</i> Logout
+    </div>
+
+  </ion-side-menu>
+
+
+</ion-side-menus>

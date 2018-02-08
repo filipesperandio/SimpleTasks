@@ -7,3 +7,32 @@
 **/captures
 **/.externalNativeBuild
 **/*.apk
+
+# Managed by NPM
+**/node_modules/
+
+# Managed by Bower
+**/src/lib/
+
+# Managed by Cordova
+**/platforms/
+**/plugins/
+
+# Build and Distribution directories
+**/www/
+**/dist/
+**/artifacts/
+
+# Installed by the 'npmw' module
+**/npmw
+
+# Garbage
+**/tmp/
+**/npm-debug.log
+**/node-debug.log
+**/webdriver.pid
+**/webdriver.log
+**/selenium_webdriver.log
+
+# Never check in GPG keys o_O
+./*.gpg
