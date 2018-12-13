@@ -6,7 +6,7 @@
     "material-ui": "^1.0.0-beta.20",
     "material-ui-icons": "^1.0.0-beta.17",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react-dom": "^16.0.1",
     "react-scripts": "1.1.1",
     "typeface-roboto": "^0.0.43",
     "snyk": "^1.83.0"
